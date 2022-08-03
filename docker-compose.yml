@@ -7,62 +7,78 @@ services:
     environment :
       - "TZ=Asia/Seoul"
     ports : 
-      - "9001:80"
+      - "19001:80"
     volumes:
       - "./nginx/conf/conf.d:/etc/nginx/conf.d"
       - "./nginx/conf/nginx.conf:/etc/nginx/nginx.conf"
+      - "./admin_site/source:/var/www/admin"
+      - "./user_site/source:/var/www/admin"
     networks : 
       front_end :
-        ipv4_address: 172.169.0.2
+        ipv4_address: 172.198.0.2
       back_end :
-        ipv4_address: 172.170.0.2
+        ipv4_address: 172.200.0.2
   admin_site:
     build: "./admin_site"
     restart : "always"
     tty : true
     ports:
-      - "9002:3000"
+      - "19002:3000"
     volumes:
-        - "./react/source:/var/www"
+        - "./admin_site/source:/var/www"
         - "./share:/var/www/share"
     networks : 
       front_end :
-        ipv4_address: 172.169.0.3
+        ipv4_address: 172.198.0.3
 
   user_site:
     build: "./user_site"
     restart : "always"
     ports:
-      - "9003:3000"
+      - "19003:3000"
     environment :
       - "TZ=Asia/Seoul"
     tty : true
     volumes:
-      - "./react/source:/var/www"
+      - "./user_site/source:/var/www"
       - "./share:/var/www/share"
     networks : 
       front_end :
-        ipv4_address: 172.169.0.4
-  api:
-    build: "./api"
+        ipv4_address: 172.198.0.4
+  api_gateway:
+    build: "./api_gateway"
     tty : true
     restart : "always"
     ports:
-      - "9004:80"
+      - "19004:80"
     volumes:
       - "./api/source:/var/www"
       - "./share:/var/www/share"
     networks :
       back_end :
-        ipv4_address: 172.170.0.4
+        ipv4_address: 172.200.0.4
+  auth_api:
+    image: 'node:latest'
+    tty : true
+    restart : "always"
+    ports:
+      - "19005:80"
+    volumes:
+      - "./api/source:/var/www"
+      - "./share:/var/www/share"
+    networks :
+      back_end :
+        ipv4_address: 172.200.0.5
+    
 networks:
   front_end:
     ipam:
       driver: default
       config :
-       - subnet: 172.169.0.0/16
+       - subnet: 172.198.0.0/24
   back_end:
     ipam:
       driver: default
       config : 
-        - subnet: 172.170.0.0/16
+        - subnet: 172.200.0.0/24
+  
