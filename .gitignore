@@ -2,6 +2,14 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
 ## custom 하게 ignore 할 항목들
 
+# Yarn
+.yarn/*
+!.yarn/cache
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
 ### Node ###
 # Logs
 logs
