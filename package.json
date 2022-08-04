@@ -4,5 +4,17 @@
   "workspaces": [
     "frontend/*",
     "backend/*"
-  ]
+  ],
+  "devDependencies": {
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb": "latest",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "express-generator": "^4.16.1",
+    "prettier": "^2.7.1"
+  }
 }
